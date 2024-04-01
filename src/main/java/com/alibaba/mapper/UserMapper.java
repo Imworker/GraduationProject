@@ -18,7 +18,7 @@ public interface UserMapper {
      * @param username
      * @return
      */
-    @Select(value = "select u.username,u.password from user u where u.username=#{username}")
+    @Select(value = "select username,password,member from user  where username=#{username}")
     @Results
             ({@Result(property = "username",column = "username"),
               @Result(property = "password",column = "password")})
@@ -29,7 +29,7 @@ public interface UserMapper {
      * @param user
      * @return
      */
-    @Insert("insert into user values(#{id},#{username},#{password})")
+    @Insert("insert into user (username,password,member) values(#{username},#{password},#{member})")
     //加入该注解可以保存对象后，查看对象插入id
     @Options(useGeneratedKeys = true,keyProperty = "id",keyColumn = "id")
     void regist(User user);
@@ -39,6 +39,6 @@ public interface UserMapper {
      * @param user
      * @return
      */
-    @Select("select u.id from user u where u.username = #{username} and password = #{password}")
-    Long login(User user);
+    @Select("select username,password,member from user where username = #{username} and password = #{password}")
+    User login(User user);
 }
